@@ -118,14 +118,21 @@ The API supports both streaming and non-streaming responses, making it suitable 
 wrangler kv:namespace create "API_KEYS"
 wrangler kv:namespace create "RATE_LIMIT_KV"
 
-# Update wrangler.toml with returned IDs
-[[kv_namespaces]]
-binding = "API_KEYS"
-id = "YOUR_API_KEYS_NAMESPACE_ID"
-
-[[kv_namespaces]]
-binding = "RATE_LIMIT_KV"
-id = "YOUR_RATE_LIMIT_NAMESPACE_ID"
+# Update wrangler.json with your KV namespace IDs:
+```json
+{
+  "kv_namespaces": [
+    {
+      "binding": "API_KEYS",
+      "id": "YOUR_API_KEYS_NAMESPACE_ID"
+    },
+    {
+      "binding": "RATE_LIMIT_KV",
+      "id": "YOUR_RATE_LIMIT_NAMESPACE_ID"
+    }
+  ]
+}
+```
 ```
 
 ### Step 2: Configure Environment Variables

@@ -1,9 +1,24 @@
 import { AIModel, StreamingChatResponse } from '../types';
 import modelsData from '../models.json';
 
+/**
+ * @class AIService
+ * @description Service for interacting with AI models and capabilities.
+ */
 export class AIService {
+  /**
+   * @constructor
+   * @param {any} ai - The AI instance from the environment
+   * Initializes the service with necessary dependencies.
+   */
   constructor(private ai: any) { }
 
+  /**
+   * @method listAvailableModels
+   * @description Retrieves the list of available AI models.
+   * 
+   * @returns {Promise<AIModel[]>} Array of available AI models
+   */
   async listAvailableModels(): Promise<AIModel[]> {
     try {
       return modelsData.models;
@@ -13,6 +28,19 @@ export class AIService {
     }
   }
 
+  /**
+   * @method generateChatCompletion
+   * @description Generates chat completions using the specified AI model.
+   * 
+   * @param {Object} params - Parameters for generating chat completion
+   * @param {Array} params.messages - The conversation messages
+   * @param {string} params.model - The AI model to use
+   * @param {number} [params.temperature] - Sampling temperature
+   * @param {number} [params.max_tokens] - Maximum number of tokens to generate
+   * @param {boolean} [params.stream] - Whether to stream the response
+   * 
+   * @returns {Promise<{ content: string; finishReason: string } | ReadableStream>} Chat completion result or stream
+   */
   async generateChatCompletion(params: {
     messages: { role: string; content: string }[];
     model: string;
@@ -48,7 +76,14 @@ export class AIService {
       if (params.stream) {
         const aiInstance = this.ai;
         return new ReadableStream({
-          async start(controller) {
+            /**
+             * @method start
+             * @description Initializes the streaming process for chat completions.
+             * 
+             * @param {ReadableStreamDefaultController} controller - The stream controller
+             * Sets up the streaming pipeline from AI service to client.
+             */
+            async start(controller) {
             try {
               const response = await aiInstance.run(params.model, {
                 messages: params.messages,
@@ -96,6 +131,13 @@ export class AIService {
     }
   }
 
+  /**
+   * @method getModelById
+   * @description Retrieves an AI model by its ID.
+   * 
+   * @param {string} modelId - The ID of the model to retrieve
+   * @returns {AIModel | undefined} The matching AI model or undefined if not found
+   */
   getModelById(modelId: string): AIModel | undefined {
     return modelsData.models.find(model => model.id === modelId);
   }

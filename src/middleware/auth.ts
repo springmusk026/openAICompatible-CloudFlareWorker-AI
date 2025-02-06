@@ -1,6 +1,15 @@
 import type { Response, Request, Env } from '../types';
 import { createApiResponse } from '../types';
 
+/**
+ * @function verifyApiKey
+ * @description Verifies the API key in the request's Authorization header.
+ * 
+ * @param {Request} request - The incoming HTTP request object
+ * @param {Env} env - The environment configuration
+ * 
+ * @returns {Promise<Response | null>} Returns an error response if verification fails, otherwise null
+ */
 export async function verifyApiKey(request: Request, env: Env): Promise<Response | null> {
   const authHeader = request.headers.get('Authorization');
 

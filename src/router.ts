@@ -7,16 +7,36 @@ import { checkRateLimit } from './middleware/rateLimit';
 import { addSecurityHeaders } from './middleware/security';
 import { createApiResponse } from './types';
 
+/**
+ * @class Router
+ * @description Main application router that handles routing logic and request delegation.
+ * Responsible for directing incoming requests to appropriate controllers.
+ */
 export class Router {
   private chatController: ChatController;
   private modelsController: ModelsController;
 
+  /**
+   * @constructor
+   * @param {Env} env - The environment configuration
+   * Initializes necessary services and controllers.
+   */
   constructor(env: Env) {
     const aiService = new AIService(env.AI);
     this.chatController = new ChatController(aiService);
     this.modelsController = new ModelsController(aiService);
   }
 
+  /**
+   * @method handle
+   * @description Main request handler that processes incoming HTTP requests.
+   * 
+   * @param {Request} request - The incoming HTTP request object
+   * @param {Env} env - The environment configuration
+   * 
+   * @returns {Promise<Response>} The HTTP response
+   * Handles routing, authentication, rate limiting, and delegates to appropriate controllers.
+   */
   async handle(request: Request, env: Env): Promise<Response> {
     if (request.method === 'OPTIONS') {
       return this.handlePreflight();
@@ -66,6 +86,13 @@ export class Router {
     }
   }
 
+  /**
+   * @method handlePreflight
+   * @private
+   * @description Handles CORS preflight requests.
+   * 
+   * @returns {Response} The HTTP response for OPTIONS requests
+   */
   private handlePreflight(): Response {
     const headers = new Headers({
       'Access-Control-Allow-Origin': '*',

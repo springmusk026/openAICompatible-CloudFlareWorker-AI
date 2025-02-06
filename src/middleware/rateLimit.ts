@@ -9,6 +9,15 @@ interface RateLimitData {
   timestamp: number;
 }
 
+/**
+ * @function checkRateLimit
+ * @description Checks and enforces rate limiting for API requests.
+ * 
+ * @param {Request} request - The incoming HTTP request object
+ * @param {Env} env - The environment configuration
+ * 
+ * @returns {Promise<RateLimitInfo | Response>} Returns rate limit information or an error response if limit exceeded
+ */
 export async function checkRateLimit(request: Request, env: Env): Promise<RateLimitInfo | Response> {
   try {
     const apiKey = request.headers.get('Authorization')?.replace('Bearer ', '');

@@ -32,7 +32,7 @@
     },
     {
       "binding": "RATE_LIMIT_KV",
-      "id": "fc648b83a4824df2bfb00707a35721ee",
+      "id": "YOUR_KV_ID",
       "preview_id": "YOUR_RATE_LIMIT_KV_PREVIEW_ID"
     }
   ]

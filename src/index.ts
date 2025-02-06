@@ -3,6 +3,16 @@ import type { Env, Request, Response, ExecutionContext } from './types';
 import { addSecurityHeaders } from './middleware/security';
 import { isError } from './types';
 
+/**
+ * @description Handles incoming HTTP requests for the application.
+ * This is the main entry point for processing requests.
+ * 
+ * @param {Request} request - The incoming HTTP request object
+ * @param {Env} env - The environment configuration
+ * @param {ExecutionContext} ctx - The execution context
+ * 
+ * @returns {Promise<Response>} The HTTP response
+ */
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     try {

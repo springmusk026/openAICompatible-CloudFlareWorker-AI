@@ -4,9 +4,28 @@ import { AIService } from '../services/aiService';
 import { ChatCompletionRequest, ChatCompletionResponse, RateLimitInfo } from '../types';
 import { addSecurityHeaders } from '../middleware/security';
 
+/**
+ * @class ChatController
+ * @description Controller for handling chat completion requests.
+ * Manages interaction between API requests and AI service.
+ */
 export class ChatController {
+  /**
+   * @constructor
+   * @param {AIService} aiService - The AI service instance
+   * Initializes the controller with necessary services.
+   */
   constructor(private aiService: AIService) {}
 
+  /**
+   * @method createChatCompletion
+   * @description Handles chat completion requests, both streaming and non-streaming.
+   * 
+   * @param {workers.Request} request - The incoming HTTP request object
+   * @param {RateLimitInfo | null} rateLimitInfo - Rate limiting information
+   * 
+   * @returns {Promise<workers.Response>} The HTTP response containing chat completion result
+   */
   async createChatCompletion(request: workers.Request, rateLimitInfo: RateLimitInfo | null): Promise<workers.Response> {
     try {
       const body: ChatCompletionRequest = await request.json();
@@ -43,7 +62,14 @@ export class ChatController {
 
         const reader = stream.getReader();
         const transformedStream = new ReadableStream({
-          async start(controller) {
+            /**
+             * @method start
+             * @description Initializes the streaming process for chat completions.
+             * 
+             * @param {ReadableStreamDefaultController} controller - The stream controller
+             * Sets up the streaming pipeline and chunk processing.
+             */
+            async start(controller) {
             let buffer = '';
             let sentRole = false;
 
@@ -89,6 +115,13 @@ export class ChatController {
               controller.error(error);
             }
 
+            /**
+             * @function processChunk
+             * @description Processes individual chunks of streaming data.
+             * 
+             * @param {string} chunk - The incoming data chunk
+             * Parses and formats the chunk for streaming response.
+             */
             async function processChunk(chunk: string) {
               try {
                 const jsonStr = chunk.startsWith('data: ') ? chunk.slice(6) : chunk;

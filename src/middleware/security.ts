@@ -1,5 +1,11 @@
 import type { Headers } from '../types';
 
+/**
+ * @function addSecurityHeaders
+ * @description Adds security-related HTTP headers to the response.
+ * 
+ * @param {Headers} headers - The headers object to modify
+ */
 export function addSecurityHeaders(headers: Headers): void {
   headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   headers.set('X-Content-Type-Options', 'nosniff');

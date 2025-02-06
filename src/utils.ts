@@ -1,6 +1,13 @@
 import type { ChatCompletionRequest } from './types';
 import type * as workers from '@cloudflare/workers-types';
 
+/**
+ * @function validateRequestBody
+ * @description Validates the request body for chat completion requests.
+ * 
+ * @param {any} body - The request body to validate
+ * @returns {workers.Response | null} Returns an error response if validation fails, otherwise null
+ */
 export function validateRequestBody(body: any): workers.Response | null {
   if (!body.model) {
     return createErrorResponse('model is required', 'invalid_request_error', 'model');
@@ -74,6 +81,17 @@ export function validateRequestBody(body: any): workers.Response | null {
   return null;
 }
 
+/**
+ * @function createErrorResponse
+ * @description Creates a standardized error response with JSON content type.
+ * 
+ * @param {string} message - The error message
+ * @param {string} type - The error type
+ * @param {string} [param] - Optional parameter that caused the error
+ * @param {string} [code] - Optional error code
+ * @param {number} [status=400] - HTTP status code (default 400)
+ * @returns {workers.Response} The created error response
+ */
 export function createErrorResponse(
   message: string,
   type: string,
@@ -97,10 +115,24 @@ export function createErrorResponse(
   ) as workers.Response;
 }
 
+/**
+ * @function calculateTokens
+ * @description Estimates the number of tokens in a given text.
+ * 
+ * @param {string} text - The input text
+ * @returns {number} Estimated number of tokens
+ */
 export function calculateTokens(text: string): number {
   return Math.ceil(text.length / 4);
 }
 
+/**
+ * @function safeJsonParse
+ * @description Safely parses JSON strings without throwing errors.
+ * 
+ * @param {string} str - The JSON string to parse
+ * @returns {any} Parsed object or null if parsing fails
+ */
 export function safeJsonParse(str: string): any {
   try {
     return JSON.parse(str);

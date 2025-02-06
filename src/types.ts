@@ -92,10 +92,25 @@ export interface AIModel {
   }>;
 }
 
+/**
+ * @function isError
+ * @description Type guard to check if an object is an instance of Error.
+ * 
+ * @param {unknown} error - The object to check
+ * @returns {error is Error} Returns true if the object is an Error instance
+ */
 export function isError(error: unknown): error is Error {
   return error instanceof Error;
 }
 
+/**
+ * @function createApiResponse
+ * @description Creates a standardized API response with JSON content type.
+ * 
+ * @param {unknown} body - The response body content
+ * @param {ResponseInit} init - Optional response initialization options
+ * @returns {workers.Response} The created API response
+ */
 export function createApiResponse(body: unknown, init: ResponseInit = {}): workers.Response {
   const headers = new Headers(init.headers);
   headers.set('Content-Type', 'application/json');

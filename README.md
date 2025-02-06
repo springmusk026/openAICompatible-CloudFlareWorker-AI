@@ -349,6 +349,21 @@ SOFTWARE.
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [Wrangler CLI Guide](https://developers.cloudflare.com/workers/wrangler/)
 
+## Contact and Project Information
+
+This project is maintained by Basanta Sapkota:
+
+- **GitHub Repository**: [springmusk026/openAICompatible-CloudFlareWorker-AI](https://github.com/springmusk026/openAICompatible-CloudFlareWorker-AI)
+- **Personal Website**: [basantasapkota026.com.np](https://basantasapkota026.com.np)
+- **Social Media**:
+  - Facebook: [spring.musk](https://www.facebook.com/spring.musk/)
+  - Telegram: [springmusk](https://t.me/springmusk)
+- **Email**: springmusk@gmail.com
+
+I'm available for freelance projects and collaborations. If you're interested in working together or have any questions about this project, feel free to reach out through any of the above channels.
+
+For professional inquiries, please use the email address provided.
+
 ## Error Handling
 
 The API returns standard error responses in this format:
